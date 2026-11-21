@@ -1,0 +1,64 @@
+Gregory Turner
+November 21, 2026
+Animate4U: A Blender Animation Add-on
+
+Hi, I'm Gregory Turner, a Master of Science in Computer Science student at Full Sail University and the creator of Animate4U. 
+My background sits at the intersection of software engineering, human-computer interaction, and 2D/3D character art, building 
+character rigs, turnaround sheets, expression sets, and stylized visuals in Blender and adjacent creative tools. 
+Animators spend enormous energy polishing curves, protecting key poses, and recovering from awkward interpolation artifacts 
+when they should be focusing on acting, timing, and storytelling.
+
+My goal with Animate4U is to build a fast, non-destructive Blender 5.0 add-on that assists animators directly inside the 3D 
+Viewport without getting in their way or locking them into fragile black boxes. Over the past month, I made a pivotal scope 
+decision: streamlining the project by removing the heavy ML pipeline and Normal-priority extras so I could ship a rock-solid, 
+deterministic math-and-curve workflow for Milestone 1 and 2. Whenever self-doubt creeps in, especially when debugging Blender's 
+Python runtime or preparing human-subjects evaluation materials, coming back to why I started this build helps ground me. 
+Reliable tools make creative iteration faster and safer.
+
+This month focused on building and wiring together the core Milestone 1 and 2 architecture inside Visual Studio Code for 
+Blender 5.0:
+
+3D Viewport Sidebar Panel: Organized the add-on UI around three primary workflow pillars—Smoothing, Smart Breakdowns, and 
+Secondary Motion, paired with a live 0.0–1.0 Assistance Strength slider and a one-click Before/After toggle for instant 
+visual comparison.
+
+Fast Curve I/O & 360-Flip Prevention (core/fcurve_io.py): Built fast NumPy-backed curve reading and writing routines that 
+guard against rotational 360-degree flips during curve processing so angular channels stay continuous and predictable.
+
+In-Memory Backup Cache & Extreme Keyframe Locking (core/state_cache.py): Implemented an in-memory curve backup cache so 
+animators can revert safely at any time, alongside manual EXTREME keyframe locking to protect critical pose extremes from 
+being flattened or drifted during edits.
+
+Pin-Locked Curve Smoothing & Handle Fixer (core/smoothing.py): Developed a SciPy-based smoothing solver engineered to stay 
+within 0.001 units of pin-locked constraints and keep curve evaluation responsive in under 15 ms on the live slider path, 
+supported by curve handle adjustments.
+
+I built these modules using Python, NumPy, SciPy, and Blender's Python API, referencing Blender's F-Curve/action data 
+structures, SciPy interpolation/optimization documentation, and my updated High-Level Design Document. 
+The hardest technical challenges this month were wiring VS Code's Python environment to Blender 5.0's embedded Python runtime, 
+testing add-on execution cleanly, keeping Git commit history tidy, and tuning solver responsiveness so live scrubbing feels 
+immediate.
+
+What Went Right This Month:
+Shipping Core M1 Modules: Getting the sidebar layout, core/fcurve_io.py, core/state_cache.py, core/smoothing.py, 
+EXTREME keyframe locking, Before/After toggle, and handle/slider workflow into place gave me a tangible, 
+testable system rather than just diagrams.
+
+Cutting Scope Decisively: Dropping the ML pipeline and Normal-priority backlog kept development focused on high-value curve 
+math and usability readiness.
+
+Evaluation Prep: Completing IRB training and drafting study protocols, informed consent documents, schedules, and 
+presentation materials moved the capstone from pure coding toward real user validation.
+
+What Went Wrong This Month:
+Environment & Tooling Friction: Aligning VS Code editor/linting/execution paths with Blender 5.0's Python environment and 
+smoothing out Git commit workflows took extra debugging time.
+
+Over-Ambitious Initial Scope: Carrying ML and secondary features too far into planning initially created split focus before 
+the core curve math was proven.
+
+How I Can Improve Moving Forward
+Lock down repeatable Blender add-on test scripts and clean Git commit habits early in each sprint so environment setup 
+never slows feature work.
+
+Time-box documentation and slide polish separately from coding blocks so neither gets squeezed at the last minute.
